@@ -81,4 +81,29 @@ module.exports = (app) => {
 			}
 		}
 	);
+
+	app.use((err, req, res, next) => {
+		logger.error({
+			API_REQUEST_ERROR: {
+				error_name: req.error_name || "UNKNOWN_ERROR",
+				message: err.message,
+				stack: err.stack.replace(/\\/g, "/"), // Include stack trace for debugging
+				request: {
+					method: req.method,
+					url: req.url,
+					code: err.status || 500,
+				},
+				data: err.data || [],
+			},
+		});
+
+		const status = err.status || 500;
+		const message = err.message || "Internal Server Error";
+
+		res.status(status).json({
+			status,
+			data: err.data || [],
+			message,
+		});
+	});
 };
