@@ -8,8 +8,18 @@ module.exports = class ReportsService {
 	}
 
 	async GetDashboardData() {
-		const result = await this.#repository.GetDashboardData();
+		const totalCPOs = await this.#repository.GetTotalCPOs();
+		const rfidData = await this.#repository.GetTotalRFIDs();
+		const evsesData = await this.#repository.GetTotalEVSEs();
+		const totalLocations = await this.#repository.GetTotalLocations();
+		const topupSales = await this.#repository.GetTotalTopups();
 
-		return result;
+		return {
+			totalCPOs,
+			rfidData,
+			evsesData,
+			totalLocations,
+			topupSales,
+		};
 	}
 };

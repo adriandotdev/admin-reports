@@ -9,12 +9,14 @@ const { validationResult, body } = require("express-validator");
 const logger = require("../config/winston");
 
 // Import your SERVICE HERE
+const ReportsService = require("../services/ReportsService");
 // Import MISC HERE
 
 /**
  * @param {import('express').Express} app
  */
 module.exports = (app) => {
+	const service = new ReportsService();
 	const tokenMiddleware = new TokenMiddleware();
 	const roleMiddleware = new RoleManagementMiddleware();
 
@@ -39,7 +41,7 @@ module.exports = (app) => {
 		"/admin_reports/api/v1/dashboard",
 		[
 			tokenMiddleware.AccessTokenVerifier(),
-			roleMiddleware.CheckRole(ROLES.ADMIN),
+			roleMiddleware.CheckRole(ROLES.ADMIN, ROLES.ADMIN_NOC),
 		],
 
 		/**
@@ -55,6 +57,10 @@ module.exports = (app) => {
 					},
 				});
 
+				const result = await service.GetDashboardData();
+
+				console.log(result);
+
 				logger.info({
 					DASHBOARD_RESPONSE: {
 						role: req.role,
@@ -64,7 +70,7 @@ module.exports = (app) => {
 
 				return res
 					.status(200)
-					.json({ status: 200, data: [], message: "Success" });
+					.json({ status: 200, data: result, message: "Success" });
 			} catch (err) {
 				logger.error({
 					DASHBOARD_ERROR: {
