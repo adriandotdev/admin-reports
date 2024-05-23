@@ -49,7 +49,7 @@ app.use(cookieParser());
  * Import all of your routes below
  */
 // Import here
-
+require("./api/reports.api")(app);
 app.use("*", (req, res, next) => {
 	logger.error({
 		API_NOT_FOUND: {
