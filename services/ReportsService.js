@@ -15,11 +15,11 @@ module.exports = class ReportsService {
 		const topupSales = await this.#repository.GetTotalTopups();
 
 		return {
-			totalCPOs,
-			rfidData,
-			evsesData,
-			totalLocations,
-			topupSales,
+			total_cpos: totalCPOs[0].total_cpos,
+			rfid_info: { ...rfidData[0] },
+			evse_info: { ...evsesData[0] },
+			location_info: { ...totalLocations[0] },
+			topup_info: { ...topupSales[0] },
 		};
 	}
 };
