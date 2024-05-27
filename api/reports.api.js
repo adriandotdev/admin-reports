@@ -41,7 +41,11 @@ module.exports = (app) => {
 		"/admin_reports/api/v1/dashboard",
 		[
 			tokenMiddleware.AccessTokenVerifier(),
-			roleMiddleware.CheckRole(ROLES.ADMIN, ROLES.ADMIN_NOC),
+			roleMiddleware.CheckRole(
+				ROLES.ADMIN,
+				ROLES.ADMIN_NOC,
+				ROLES.ADMIN_MARKETING
+			),
 		],
 
 		/**
