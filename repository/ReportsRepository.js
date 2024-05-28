@@ -1,6 +1,16 @@
 const mysql = require("../database/mysql");
 
 module.exports = class ReportsRepository {
+	/**
+	 * Retrieves the total number of Charging Point Operators (CPOs).
+	 *
+	 * This function queries the database to count the total number of entries in the `cpo_owners` table.
+	 * The result is ordered by the date the entries were created in descending order.
+	 *
+	 * @function GetTotalCPOs
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the total number of CPOs.
+	 * @throws {Error} If an error occurs during the database operation, it is thrown with details.
+	 */
 	GetTotalCPOs() {
 		const QUERY = `
 			SELECT 
@@ -22,6 +32,16 @@ module.exports = class ReportsRepository {
 		});
 	}
 
+	/**
+	 * Retrieves the total number of RFID cards with various statuses and their respective effective dates.
+	 *
+	 * This function queries the database to count the total number of RFID cards that are 'ACTIVE', 'UNASSIGNED',
+	 * and the overall total. It also retrieves the most recent assignment and creation dates for these RFID cards.
+	 *
+	 * @function GetTotalRFIDs
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the total counts and effective dates of RFID cards.
+	 * @throws {Error} If an error occurs during the database operation, it is thrown with details.
+	 */
 	GetTotalRFIDs() {
 		const QUERY = `
 			SELECT
@@ -44,6 +64,16 @@ module.exports = class ReportsRepository {
 		});
 	}
 
+	/**
+	 * Retrieves the total number of EVSEs (Electric Vehicle Supply Equipment) with various statuses and their respective effective dates.
+	 *
+	 * This function queries the database to count the total number of EVSEs that are assigned to a CPO location,
+	 * unassigned, and the overall total. It also retrieves the most recent creation dates for these EVSEs based on their status.
+	 *
+	 * @function GetTotalEVSEs
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the total counts and effective dates of EVSEs.
+	 * @throws {Error} If an error occurs during the database operation, it is thrown with details.
+	 */
 	GetTotalEVSEs() {
 		const QUERY = `
 			SELECT 
@@ -66,6 +96,16 @@ module.exports = class ReportsRepository {
 		});
 	}
 
+	/**
+	 * Retrieves the total number of CPO locations with various statuses and their respective effective dates.
+	 *
+	 * This function queries the database to count the total number of CPO locations that are assigned to a CPO owner,
+	 * unassigned, and the overall total. It also retrieves the most recent creation date for all CPO locations.
+	 *
+	 * @function GetTotalLocations
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the total counts and effective dates of CPO locations.
+	 * @throws {Error} If an error occurs during the database operation, it is thrown with details.
+	 */
 	GetTotalLocations() {
 		const QUERY = `
 
@@ -87,6 +127,16 @@ module.exports = class ReportsRepository {
 		});
 	}
 
+	/**
+	 * Retrieves the total topup sales, voided topups, and categorized topup sales along with the most recent topup date.
+	 *
+	 * This function queries the database to calculate the total amount of topup sales, voided topups, and topup sales
+	 * categorized by payment type (CARD and MAYA). Additionally, it fetches the most recent topup date.
+	 *
+	 * @function GetTotalTopups
+	 * @returns {Promise<Object>} A promise that resolves to an object containing the total amounts and the effective date of topup sales.
+	 * @throws {Error} If an error occurs during the database operation, it is thrown with details.
+	 */
 	GetTotalTopups() {
 		const QUERY = `
 
